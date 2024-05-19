@@ -1,0 +1,6 @@
+com\example\HelloWorldExample.class
+com\example\recomendaciones\RecomendadorClubes.class
+com\example\gestores\GestorUsuarios.class
+com\example\model\Usuario.class
+com\example\model\Club.class
+com\example\model\Estudiante.class
