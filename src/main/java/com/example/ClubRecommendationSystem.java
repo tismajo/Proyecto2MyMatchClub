@@ -9,6 +9,7 @@ import org.neo4j.driver.TransactionWork;
 
 import static org.neo4j.driver.Values.parameters;
 
+@SuppressWarnings("deprecation")
 public class ClubRecommendationSystem implements AutoCloseable {
     private final Driver driver;
 
