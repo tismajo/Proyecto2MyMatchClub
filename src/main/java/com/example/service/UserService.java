@@ -1,38 +1,42 @@
-package com.example.gestores;
+package com.example.service;
 
 import com.example.model.Estudiante;
 import com.example.model.Usuario;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class GestorUsuarios {
-    private Map<String, Usuario> usuariosRegistrados;
+@Service
+public class UserService {
 
-    public GestorUsuarios() {
-        this.usuariosRegistrados = new HashMap<>();
+    private final Map<String, Usuario> usuariosRegistrados;
+
+    public UserService() {
+        // Podrías inicializar este mapa con datos de una base de datos u otro almacenamiento
+        // en tu implementación real
+        usuariosRegistrados = new HashMap<>();
     }
 
+    // Método para registrar un nuevo usuario
     public boolean registrarUsuario(String nombreUsuario, String contrasena, Estudiante estudiante) {
         if (usuariosRegistrados.containsKey(nombreUsuario)) {
-            System.out.println("El nombre de usuario ya está en uso.");
+            // El nombre de usuario ya está en uso
             return false;
         }
+        // Crear y agregar el nuevo usuario al mapa
         usuariosRegistrados.put(nombreUsuario, new Usuario(nombreUsuario, contrasena, estudiante));
-        System.out.println("Usuario registrado con éxito.");
         return true;
     }
 
+    // Método para iniciar sesión
     public Usuario iniciarSesion(String nombreUsuario, String contrasena) {
         Usuario usuario = usuariosRegistrados.get(nombreUsuario);
         if (usuario != null && usuario.verificarContrasena(contrasena)) {
-            System.out.println("Inicio de sesión exitoso.");
+            // Inicio de sesión exitoso
             return usuario;
         }
-        System.out.println("Nombre de usuario o contraseña incorrectos.");
+        // Nombre de usuario o contraseña incorrectos
         return null;
-    }
-    public Usuario getUsuario(String nombreUsuario) {
-        return usuariosRegistrados.get(nombreUsuario);
     }
 }

@@ -15,12 +15,27 @@ public class Usuario {
         return nombreUsuario;
     }
 
-    public boolean verificarContrasena(String contrasena) {
-        return this.contrasena.equals(contrasena);
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
     public Estudiante getEstudiante() {
         return estudiante;
     }
-}
 
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
+    }
+
+    public boolean verificarContrasena(String contrasena) {
+        return this.contrasena.equals(contrasena);
+    }
+}
