@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login y Registro</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<h1>Bienvenido</h1>
+<div id="container">
+    <div id="register">
+        <h2>Registro</h2>
+        <form id="registerForm">
+            <input type="text" id="registerNombreUsuario" placeholder="Nombre de Usuario" required>
+            <input type="password" id="registerContrasena" placeholder="Contraseña" required>
+            <input type="text" id="registerNombre" placeholder="Nombre" required>
+            <input type="text" id="registerCarrera" placeholder="Carrera" required>
+            <input type="number" id="registerEdad" placeholder="Edad" required>
+            <input type="text" id="registerGenero" placeholder="Género" required>
+            <input type="text" id="registerAfluenciaPreferida" placeholder="Afluencia Preferida" required>
+            <input type="text" id="registerIntereses" placeholder="Intereses (separados por comas)" required>
+            <input type="text" id="registerClubesAsistidos" placeholder="Clubes Asistidos (separados por comas)" required>
+            <input type="text" id="registerAccionesPreferidas" placeholder="Acciones Preferidas (separados por comas)" required>
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+    <div id="login">
+        <h2>Iniciar Sesión</h2>
+        <form id="loginForm">
+            <input type="text" id="loginNombreUsuario" placeholder="Nombre de Usuario" required>
+            <input type="password" id="loginContrasena" placeholder="Contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+</div>
+<script src="js/scripts.js"></script>
+</body>
+</html>
