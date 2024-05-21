@@ -15,10 +15,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
+                .csrf().disable() // Desactiva CSRF si no lo necesitas
                 .authorizeRequests()
-                .antMatchers("/api/auth/**", "/static/**", "/css/**", "/js/**", "/index.html").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().permitAll(); // Permite todas las solicitudes
     }
 
     @Bean
