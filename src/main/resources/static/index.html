@@ -230,10 +230,10 @@
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-7">
                 <form id="loginForm">
-                    <!-- Email -->
+                    <!--  -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="loginEmail" type="email" placeholder="name@example.com" />
-                        <label for="loginEmail">Email address</label>
+                        <label for="loginEmail">Username</label>
                     </div>
                     <!-- Password -->
                     <div class="form-floating mb-3">
@@ -247,7 +247,6 @@
         </div>
     </div>
 </section>
-
 <!-- Sección de registro -->
 <section class="page-section" id="register">
     <div class="container">
@@ -261,7 +260,7 @@
         </div><!-- form de registro -->
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-7">
-                <form id="registerForm" action="guardar_registro.php" method="POST">
+                <form id="registerForm" method="POST">
                     <!-- Nombre de usuario -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="nombreUsuario" name="nombreUsuario" type="text" placeholder="Enter your username..." />
@@ -319,9 +318,11 @@
                     <!-- Register Button-->
                     <button class="btn btn-primary btn-xl" id="registerButton" type="submit">Register</button>
                 </form>
+                <div id="registroExitoso" class="alert alert-success mt-3" style="display: none;">
+                    ¡Registro exitoso! Puedes iniciar sesión ahora.
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </section>
 
@@ -585,8 +586,6 @@
 <script src="js/scripts.js"></script>
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-
-
 </body>
 </html>
 

@@ -10,7 +10,9 @@ import org.neo4j.driver.TransactionWork;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.neo4j.driver.Values.parameters;
 
@@ -70,6 +72,32 @@ public class GestorUsuarios {
                         }
                     }
                     return null;
+                }
+            });
+        }
+    }
+
+    public List<Map<String, Object>> recommendClubsKNN(String username, int k) {
+        try (Session session = driver.session()) {
+            return session.readTransaction(new TransactionWork<List<Map<String, Object>>>() {
+                @Override
+                public List<Map<String, Object>> execute(Transaction tx) {
+                    var result = tx.run("MATCH (u:Usuario {username: $username})-[:INTERESA_EN]->(a:Accion)-[:ASOCIADO_CON]->(c:Club) " +
+                                    "RETURN DISTINCT c.nombre AS club, c.concurrencia AS concurrencia, c.horarios AS horarios, c.facilitador AS facilitador, c.lugar AS lugar",
+                            parameters("username", username));
+
+                    List<Map<String, Object>> recommendedClubs = new ArrayList<>();
+                    while (result.hasNext()) {
+                        var record = result.next();
+                        recommendedClubs.add(Map.of(
+                                "club", record.get("club").asString(),
+                                "concurrencia", record.get("concurrencia").asString(),
+                                "horarios", record.get("horarios").asList(),
+                                "facilitador", record.get("facilitador").asString(),
+                                "lugar", record.get("lugar").asString()
+                        ));
+                    }
+                    return recommendedClubs;
                 }
             });
         }

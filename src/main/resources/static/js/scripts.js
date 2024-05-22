@@ -1,13 +1,9 @@
-/*!
-* Start Bootstrap - Freelancer v7.0.7 (https://startbootstrap.com/theme/freelancer)
-* Copyright 2013-2023 Start Bootstrap
-* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-freelancer/blob/master/LICENSE)
-*/
-//
-// Scripts
-//
+// Importar el controlador Neo4j para JavaScript
+const neo4j = require('neo4j-driver');
 
 window.addEventListener('DOMContentLoaded', event => {
+    // Crear una instancia del controlador Neo4j
+    const driver = neo4j.driver("neo4j+s://87fbfc54.databases.neo4j.io", neo4j.auth.basic("neo4j", "d95kqzeZGl5YcfOxDxuNQ7PZ_TYH2dUaiXxq2n6yNKc"));
 
     // Navbar shrink function
     var navbarShrink = function () {
@@ -20,7 +16,6 @@ window.addEventListener('DOMContentLoaded', event => {
         } else {
             navbarCollapsible.classList.add('navbar-shrink')
         }
-
     };
 
     // Shrink the navbar
@@ -50,7 +45,47 @@ window.addEventListener('DOMContentLoaded', event => {
             }
         });
     });
-// Handle login form submission
+
+    // Handle registration form submission
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const usuario = {
+            nombreUsuario: document.getElementById('nombreUsuario').value,
+            contrasena: document.getElementById('contrasena').value,
+            nombre: document.getElementById('nombre').value,
+            carrera: document.getElementById('carrera').value,
+            edad: parseInt(document.getElementById('edad').value),
+            genero: document.getElementById('genero').value,
+            afluenciaPreferida: document.getElementById('afluenciaPreferida').value,
+            intereses: document.getElementById('intereses').value.split(',').map(i => i.trim()),
+            clubesAsistidos: document.getElementById('clubesAsistidos').value.split(',').map(c => c.trim()),
+            accionesPreferidas: document.getElementById('accionesPreferidas').value.split(',').map(a => a.trim())
+        };
+
+        try {
+            const response = await fetch('/api/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(usuario)
+            });
+
+            if (response.ok) {
+                console.log('Usuario registrado con éxito.');
+                document.getElementById('registroExitoso').style.display = 'block';
+            } else {
+                console.error('Error al registrar el usuario');
+                alert('Error al registrar el usuario');
+            }
+        } catch (error) {
+            console.error('Error al enviar la solicitud:', error);
+            alert('Error al registrar el usuario');
+        }
+    });
+
+    // Handle login form submission (ejemplo)
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -59,45 +94,26 @@ window.addEventListener('DOMContentLoaded', event => {
             contrasena: document.getElementById('loginContrasena').value
         };
 
-        const response = await fetch('/api/auth/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(usuario)
-        });
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(usuario)
+            });
 
-        const message = await response.text();
-        alert(message);
-    });
-    // Navbar shrink function
-    var navbarShrink = function () {
-        const navbarCollapsible = document.body.querySelector('#mainNav');
-        if (!navbarCollapsible) {
-            return;
-        }
-        if (window.scrollY === 0) {
-            navbarCollapsible.classList.remove('navbar-shrink')
-        } else {
-            navbarCollapsible.classList.add('navbar-shrink')
-        }
-
-    };
-
-    // Shrink the navbar
-    navbarShrink();
-
-    // Shrink the navbar when page is scrolled
-    document.addEventListener('scroll', navbarShrink);
-
-    // Activate Bootstrap scrollspy on the main nav element
-        document.querySelectorAll('#navbarResponsive .nav-link')
-    responsiveNavItems.map(function (responsiveNavItem) {
-        responsiveNavItem.addEventListener('click', () => {
-            if (window.getComputedStyle(navbarToggler).display !== 'none') {
-                navbarToggler.click();
+            if (!response.ok) {
+                throw new Error('Error en la solicitud');
             }
-        });
-    });
 
+            const result = await response.json();
+            console.log(result);
+            // Muestra el mensaje de inicio de sesión exitoso
+            document.getElementById('inicioSesionExitoso').style.display = 'block';
+        } catch (error) {
+            console.error('Error al iniciar sesión:', error);
+            alert('Error al iniciar sesión');
+        }
+    });
 });
