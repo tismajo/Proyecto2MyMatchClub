@@ -1,47 +1,103 @@
-document.getElementById('registerForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+/*!
+* Start Bootstrap - Freelancer v7.0.7 (https://startbootstrap.com/theme/freelancer)
+* Copyright 2013-2023 Start Bootstrap
+* Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-freelancer/blob/master/LICENSE)
+*/
+//
+// Scripts
+//
 
-    const usuario = {
-        nombreUsuario: document.getElementById('registerNombreUsuario').value,
-        contrasena: document.getElementById('registerContrasena').value,
-        nombre: document.getElementById('registerNombre').value,
-        carrera: document.getElementById('registerCarrera').value,
-        edad: parseInt(document.getElementById('registerEdad').value),
-        genero: document.getElementById('registerGenero').value,
-        afluenciaPreferida: document.getElementById('registerAfluenciaPreferida').value,
-        intereses: document.getElementById('registerIntereses').value.split(','),
-        clubesAsistidos: document.getElementById('registerClubesAsistidos').value.split(','),
-        accionesPreferidas: document.getElementById('registerAccionesPreferidas').value.split(',')
+window.addEventListener('DOMContentLoaded', event => {
+
+    // Navbar shrink function
+    var navbarShrink = function () {
+        const navbarCollapsible = document.body.querySelector('#mainNav');
+        if (!navbarCollapsible) {
+            return;
+        }
+        if (window.scrollY === 0) {
+            navbarCollapsible.classList.remove('navbar-shrink')
+        } else {
+            navbarCollapsible.classList.add('navbar-shrink')
+        }
+
     };
 
-    const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(usuario)
-    });
+    // Shrink the navbar
+    navbarShrink();
 
-    const message = await response.text();
-    alert(message);
-});
+    // Shrink the navbar when page is scrolled
+    document.addEventListener('scroll', navbarShrink);
 
-document.getElementById('loginForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const usuario = {
-        nombreUsuario: document.getElementById('loginNombreUsuario').value,
-        contrasena: document.getElementById('loginContrasena').value
+    // Activate Bootstrap scrollspy on the main nav element
+    const mainNav = document.body.querySelector('#mainNav');
+    if (mainNav) {
+        new bootstrap.ScrollSpy(document.body, {
+            target: '#mainNav',
+            rootMargin: '0px 0px -40%',
+        });
     };
 
-    const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(usuario)
+    // Collapse responsive navbar when toggler is visible
+    const navbarToggler = document.body.querySelector('.navbar-toggler');
+    const responsiveNavItems = [].slice.call(
+        document.querySelectorAll('#navbarResponsive .nav-link')
+    );
+    responsiveNavItems.map(function (responsiveNavItem) {
+        responsiveNavItem.addEventListener('click', () => {
+            if (window.getComputedStyle(navbarToggler).display !== 'none') {
+                navbarToggler.click();
+            }
+        });
+    });
+// Handle login form submission
+    document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const usuario = {
+            nombreUsuario: document.getElementById('loginNombreUsuario').value,
+            contrasena: document.getElementById('loginContrasena').value
+        };
+
+        const response = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuario)
+        });
+
+        const message = await response.text();
+        alert(message);
+    });
+    // Navbar shrink function
+    var navbarShrink = function () {
+        const navbarCollapsible = document.body.querySelector('#mainNav');
+        if (!navbarCollapsible) {
+            return;
+        }
+        if (window.scrollY === 0) {
+            navbarCollapsible.classList.remove('navbar-shrink')
+        } else {
+            navbarCollapsible.classList.add('navbar-shrink')
+        }
+
+    };
+
+    // Shrink the navbar
+    navbarShrink();
+
+    // Shrink the navbar when page is scrolled
+    document.addEventListener('scroll', navbarShrink);
+
+    // Activate Bootstrap scrollspy on the main nav element
+        document.querySelectorAll('#navbarResponsive .nav-link')
+    responsiveNavItems.map(function (responsiveNavItem) {
+        responsiveNavItem.addEventListener('click', () => {
+            if (window.getComputedStyle(navbarToggler).display !== 'none') {
+                navbarToggler.click();
+            }
+        });
     });
 
-    const message = await response.text();
-    alert(message);
 });
