@@ -10986,6 +10986,9 @@ html {
 .masthead .masthead-avatar {
     width: 15rem;
 }
+.jack-avatar {
+    width: 16rem;
+}
 
 @media (min-width: 992px) {
     .masthead {

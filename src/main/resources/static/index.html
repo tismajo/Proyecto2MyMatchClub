@@ -297,6 +297,8 @@
     </div>
 </section>
 
+
+<!-- Sección de login -->
 <!-- Sección de login -->
 <section class="page-section" id="login">
     <div class="container">
@@ -314,7 +316,7 @@
                 <form id="loginForm">
                     <!--  -->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="loginEmail" type="email" placeholder="name@example.com" />
+                        <input class="form-control" id="loginEmail" type="text" placeholder="name@example.com" />
                         <label for="loginEmail">Username</label>
                     </div>
                     <!-- Password -->
@@ -325,10 +327,50 @@
                     <!-- Login Button-->
                     <button class="btn btn-primary btn-xl" id="loginButton" type="submit">Login</button>
                 </form>
+                <div id="loginError" class="alert alert-danger mt-3" style="display: none;">
+                    Nombre de usuario o contraseña incorrectos.
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+   window.location.href = "usuario.html"; // ir a la página del usuario
+
+    const username = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nombreUsuario: username,
+            contrasena: password
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = "usuario.html"; // ir a la página del usuario
+        } else {
+            document.getElementById("loginError").style.display = "block";
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("loginError").style.display = "block";
+    });
+});
+</script>
+
+
+
+
+
 <!-- Sección de registro -->
 <section class="page-section" id="register">
     <div class="container">
