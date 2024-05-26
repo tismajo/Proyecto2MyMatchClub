@@ -39,9 +39,7 @@ public class ClubRecommendationSystem implements AutoCloseable {
 
                     // Crear relaciones entre el usuario y los nodos de acción
                     for (String accion : acciones) {
-                        tx.run("MATCH (u:Usuario {username: $username}), (a:Accion {nombre: $accion}) " +
-                               "CREATE (u)-[:INTERESA_EN]->(a)",
-                               parameters("username", username, "accion", accion));
+                        tx.run("MATCH (u:Usuario {username: $username}), (a:Accion {nombre: $accion}) " + "CREATE (u)-[:INTERESA_EN]->(a)", parameters("username", username, "accion", accion));
                     }
                     return null;
                 }

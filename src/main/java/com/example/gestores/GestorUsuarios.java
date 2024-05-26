@@ -16,6 +16,7 @@ import java.util.Map;
 
 import static org.neo4j.driver.Values.parameters;
 
+@SuppressWarnings("deprecation")
 @Service
 public class GestorUsuarios {
     private final Driver driver;
@@ -37,16 +38,16 @@ public class GestorUsuarios {
                     if (result.hasNext()) {
                         return false;
                     }
-                    // Encode password
+                    // Encode contraseña
                     String encodedPassword = passwordEncoder.encode(contrasena);
-                    // Create user node
+                    // Crear nodo usuario
                     tx.run("CREATE (u:Usuario {username: $username, password: $password, nombre: $nombre, carrera: $carrera, edad: $edad, genero: $genero, afluenciaPreferida: $afluenciaPreferida})",
                             parameters("username", nombreUsuario, "password", encodedPassword, "nombre", nombre, "carrera", carrera, "edad", edad, "genero", genero, "afluenciaPreferida", afluenciaPreferida));
-                    // Create relationships with actions
+                    // Crear relaciones con las acciones
                     for (String accion : accionesPreferidas) {
                         tx.run("MATCH (a:Accion {nombre: $accion}) CREATE (u)-[:INTERESA_EN]->(a)", parameters("accion", accion, "username", nombreUsuario));
                     }
-                    // Create relationships with clubs
+                    // Crear las relaciones con los clubes
                     for (String club : clubesAsistidos) {
                         tx.run("MATCH (c:Club {nombre: $club}) CREATE (u)-[:ASISTE_A]->(c)", parameters("club", club, "username", nombreUsuario));
                     }

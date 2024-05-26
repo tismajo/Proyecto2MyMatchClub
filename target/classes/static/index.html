@@ -342,8 +342,7 @@
         </div><!-- form de registro -->
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-7">
-                <form id="registerForm" method="POST">
-                    <!-- Nombre de usuario -->
+                <form id="registerForm" method="POST" action="/api/auth/register" enctype="application/x-www-form-urlencoded">                    <!-- Nombre de usuario -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="nombreUsuario" name="nombreUsuario" type="text" placeholder="Enter your username..." />
                         <label for="nombreUsuario">Username</label>
@@ -398,8 +397,7 @@
                         <label for="accionesPreferidas">Preferred Activities (comma separated)</label>
                     </div>
                     <!-- Register Button-->
-                    <button class="btn btn-primary btn-xl" id="registerButton" type="submit">Register</button>
-                </form>
+                    <button class="btn btn-primary btn-xl" id="registerButton" type="submit">Register</button>                </form>
                 <div id="registroExitoso" class="alert alert-success mt-3" style="display: none;">
                     ¡Registro exitoso! Puedes iniciar sesión ahora.
                 </div>

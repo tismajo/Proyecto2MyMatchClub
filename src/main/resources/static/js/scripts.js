@@ -46,44 +46,45 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
-    // Handle registration form submission
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
+// Manejar el envío del formulario de registro de usuario
+document.getElementById('registerForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        const usuario = {
-            nombreUsuario: document.getElementById('nombreUsuario').value,
-            contrasena: document.getElementById('contrasena').value,
-            nombre: document.getElementById('nombre').value,
-            carrera: document.getElementById('carrera').value,
-            edad: parseInt(document.getElementById('edad').value),
-            genero: document.getElementById('genero').value,
-            afluenciaPreferida: document.getElementById('afluenciaPreferida').value,
-            intereses: document.getElementById('intereses').value.split(',').map(i => i.trim()),
-            clubesAsistidos: document.getElementById('clubesAsistidos').value.split(',').map(c => c.trim()),
-            accionesPreferidas: document.getElementById('accionesPreferidas').value.split(',').map(a => a.trim())
-        };
+    const usuario = {
+        nombreUsuario: document.getElementById('nombreUsuario').value,
+        contrasena: document.getElementById('contrasena').value,
+        nombre: document.getElementById('nombre').value,
+        carrera: document.getElementById('carrera').value,
+        edad: parseInt(document.getElementById('edad').value),
+        genero: document.getElementById('genero').value,
+        afluenciaPreferida: document.getElementById('afluenciaPreferida').value,
+        intereses: document.getElementById('intereses').value.split(',').map(i => i.trim()),
+        clubesAsistidos: document.getElementById('clubesAsistidos').value.split(',').map(c => c.trim()),
+        accionesPreferidas: document.getElementById('accionesPreferidas').value.split(',').map(a => a.trim())
+    };
 
-        try {
-            const response = await fetch('/api/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(usuario)
-            });
+    try {
+        const response = await fetch('/api/auth/register', {
+            method: 'POST', // Aquí estamos utilizando el método POST
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(usuario)
+        });
 
-            if (response.ok) {
-                console.log('Usuario registrado con éxito.');
-                document.getElementById('registroExitoso').style.display = 'block';
-            } else {
-                console.error('Error al registrar el usuario');
-                alert('Error al registrar el usuario');
-            }
-        } catch (error) {
-            console.error('Error al enviar la solicitud:', error);
+        if (response.ok) {
+            console.log('Usuario registrado con éxito.');
+            document.getElementById('registroExitoso').style.display = 'block';
+        } else {
+            console.error('Error al registrar el usuario');
             alert('Error al registrar el usuario');
         }
-    });
+    } catch (error) {
+        console.error('Error al enviar la solicitud:', error);
+        alert('Error al registrar el usuario');
+    }
+});
+
 
     // Handle login form submission (ejemplo)
     document.getElementById('loginForm').addEventListener('submit', async (e) => {

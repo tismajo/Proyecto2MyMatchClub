@@ -1,11 +1,15 @@
 package com.example.controller;
 
+import org.springframework.http.MediaType;
+import org.springframework.util.MultiValueMap;
 import com.example.model.Usuario;
 import com.example.gestores.GestorUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -16,20 +20,34 @@ public class AuthController {
     @Autowired
     private GestorUsuarios gestorUsuarios;
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody Usuario usuario) {
+    @PostMapping(value = "/register", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<String> register(@RequestParam MultiValueMap<String, String> formData) {
+        // Extrae los datos del formulario
+        String nombreUsuario = formData.getFirst("nombreUsuario");
+        String contrasena = formData.getFirst("contrasena");
+        String nombre = formData.getFirst("nombre");
+        String carrera = formData.getFirst("carrera");
+        int edad = Integer.parseInt(formData.getFirst("edad"));
+        String genero = formData.getFirst("genero");
+        String afluenciaPreferida = formData.getFirst("afluenciaPreferida");
+        List<String> intereses = Arrays.asList(formData.getFirst("intereses").split(","));
+        List<String> clubesAsistidos = Arrays.asList(formData.getFirst("clubesAsistidos").split(","));
+        List<String> accionesPreferidas = Arrays.asList(formData.getFirst("accionesPreferidas").split(","));
+
+        // Realiza el registro del usuario utilizando el GestorUsuarios
         boolean isRegistered = gestorUsuarios.registrarUsuario(
-                usuario.getNombreUsuario(),
-                usuario.getContrasena(),
-                usuario.getNombre(),
-                usuario.getCarrera(),
-                usuario.getEdad(),
-                usuario.getGenero(),
-                usuario.getAfluenciaPreferida(),
-                usuario.getIntereses(),
-                usuario.getClubesAsistidos(),
-                usuario.getAccionesPreferidas()
+                nombreUsuario,
+                contrasena,
+                nombre,
+                carrera,
+                edad,
+                genero,
+                afluenciaPreferida,
+                intereses,
+                clubesAsistidos,
+                accionesPreferidas
         );
+
         if (isRegistered) {
             return ResponseEntity.ok("Usuario registrado con éxito.");
         } else {
