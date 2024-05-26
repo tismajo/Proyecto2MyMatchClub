@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Match My Club</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+
+<body id="top-cuerpo">
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="NavegacionMain">
+    <div class="container">
+        <a class="navbar-brand" href="#top-cuerpo">Match My Club</a>
+        <button class="navbar-toggler text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+               <!--  <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#match">Start Match</a></li> -->
+                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#recommendations">My Clubs</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<header class="masthead bg-primary text-white text-center">
+    <div class="container d-flex align-items-center flex-column">
+        <img class="jack-avatar mb-5" src="assets/img/portfolio/uvgJackT.png" alt="..." />
+        <h1 class="masthead-heading text-uppercase mb-0">My Matches</h1>
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-users "></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <p class="masthead-subheading font-weight-light mb-0">Encuentra los clubes recomendados para ti</p>
+    </div>
+</header>
+
+
+<section class="page-section bg-light" id="recommendations">
+    <div class="container">
+        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Mis Recomendaciones</h2>
+        <div class="divider-custom">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fas fa-heart"></i></div>
+            <div class="divider-custom-line"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div id="recommendationList" class="list-group">
+                    <!--  se deberían de insertar las recomendaciones si funciona -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4">Ubicación</h4>
+                <p class="lead mb-0">
+                    18 Av. 11-95 zona 15, Vista Hermosa III. Guatemala, Guatemala. 01015
+                    <br />
+                    PBX: 2507-1500 / 2364-0336 | info@uvg.edu.gt
+                </p>
+            </div>
+            <div class="col-lg-4 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4">¡Conócenos!</h4>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://www.facebook.com/universidaddelvallegt/?locale=es_LA"><i class="fab fa-fw fa-facebook-f"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://twitter.com/uvggt?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"><i class="fab fa-fw fa-twitter"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://www.instagram.com/deportesuvg/?hl=es-la"><i class="fab fa-fw fa-instagram"></i></a>
+                <a class="btn btn-outline-light btn-social mx-1" href="https://noticias.uvg.edu.gt/unete-aficionado-apoya-sigue-deportes-dragones-uvg/"><i class="fab fa-fw fa-dribbble"></i></a>
+            </div>
+            <div class="col-lg-4">
+                <h4 class="text-uppercase mb-4">Match My Club</h4>
+                <p class="lead mb-0">
+                    Plataforma de recomendaciones de clubes de la Universidad del Valle de Guatemala.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<div class="copyright py-4 text-center text-white">
+    <div class="container"><small>UVG &copy; Algoritmos y Estructuras de Datos 2024</small></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const username = "user123"; // usuario 
+        fetch(`/recommendations?username=${username}`)
+            .then(response => response.json())
+            .then(data => {
+                const recommendationList = document.getElementById("recommendationList");
+                data.forEach(recommendation => {
+                    const listItem = document.createElement("a");
+                    listItem.href = "#";
+                    listItem.className = "list-group-item list-group-item-action";
+                    listItem.textContent = recommendation.club;
+                    recommendationList.appendChild(listItem);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    });
+</script>
+</body>
+</html>
