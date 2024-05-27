@@ -27,33 +27,44 @@ public class GestorUsuarios {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public boolean registrarUsuario(String nombreUsuario, String contrasena, String nombre, String carrera, int edad, String genero,
-                                    String afluenciaPreferida, List<String> intereses, List<String> clubesAsistidos, List<String> accionesPreferidas) {
+    public boolean existeUsuario(String nombreUsuario) {
         try (Session session = driver.session()) {
-            return session.writeTransaction(new TransactionWork<Boolean>() {
+            return session.readTransaction(new TransactionWork<Boolean>() {
                 @Override
                 public Boolean execute(Transaction tx) {
-                    // Check if user already exists
                     var result = tx.run("MATCH (u:Usuario {username: $username}) RETURN u", parameters("username", nombreUsuario));
-                    if (result.hasNext()) {
-                        return false;
-                    }
-                    // Encode contraseña
-                    String encodedPassword = passwordEncoder.encode(contrasena);
-                    // Crear nodo usuario
-                    tx.run("CREATE (u:Usuario {username: $username, password: $password, nombre: $nombre, carrera: $carrera, edad: $edad, genero: $genero, afluenciaPreferida: $afluenciaPreferida})",
-                            parameters("username", nombreUsuario, "password", encodedPassword, "nombre", nombre, "carrera", carrera, "edad", edad, "genero", genero, "afluenciaPreferida", afluenciaPreferida));
-                    // Crear relaciones con las acciones
-                    for (String accion : accionesPreferidas) {
-                        tx.run("MATCH (a:Accion {nombre: $accion}) CREATE (u)-[:INTERESA_EN]->(a)", parameters("accion", accion, "username", nombreUsuario));
-                    }
-                    // Crear las relaciones con los clubes
-                    for (String club : clubesAsistidos) {
-                        tx.run("MATCH (c:Club {nombre: $club}) CREATE (u)-[:ASISTE_A]->(c)", parameters("club", club, "username", nombreUsuario));
-                    }
-                    return true;
+                    return result.hasNext(); // Retorna true si hay algún resultado (es decir, el usuario existe), de lo contrario retorna false
                 }
             });
+        }
+    }
+
+    // Método para agregar un usuario con sus preferencias
+    public void registrarUsuario(String nombreUsuario, String contrasena, String nombre, String carrera, int edad, String genero,
+                                 String afluenciaPreferida, List<String> intereses, List<String> clubesAsistidos, List<String> accionesPreferidas) {
+        if (!existeUsuario(nombreUsuario)) {
+            try (Session session = driver.session()) {
+                session.writeTransaction(new TransactionWork<Void>() {
+                    @Override
+                    public Void execute(Transaction tx) {
+                        // Encode contraseña
+                        String encodedPassword = passwordEncoder.encode(contrasena);
+
+                        // Crear el nodo de usuario
+                        tx.run("CREATE (u:Usuario {username: $username, password: $password, nombre: $nombre, carrera: $carrera, edad: $edad, genero: $genero, afluenciaPreferida: $afluenciaPreferida})",
+                                parameters("username", nombreUsuario, "password", encodedPassword, "nombre", nombre, "carrera", carrera, "edad", edad, "genero", genero, "afluenciaPreferida", afluenciaPreferida));
+
+                        // Crear relaciones entre el usuario y los nodos de acción
+                        for (String accion : accionesPreferidas) {
+                            tx.run("MATCH (u:Usuario {username: $username}), (a:Accion {nombre: $accion}) " +
+                                    "CREATE (u)-[:INTERESA_EN]->(a)", parameters("username", nombreUsuario, "accion", accion));
+                        }
+                        return null;
+                    }
+                });
+            }
+        } else {
+            throw new IllegalArgumentException("El nombre de usuario ya está en uso.");
         }
     }
 

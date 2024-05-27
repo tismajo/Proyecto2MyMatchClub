@@ -5,7 +5,7 @@ window.addEventListener('DOMContentLoaded', event => {
     // Crear una instancia del controlador Neo4j
     const driver = neo4j.driver("neo4j+s://87fbfc54.databases.neo4j.io", neo4j.auth.basic("neo4j", "d95kqzeZGl5YcfOxDxuNQ7PZ_TYH2dUaiXxq2n6yNKc"));
 
-    // Navbar shrink function
+    // Navbar shrink 
     var navbarShrink = function () {
         const navbarCollapsible = document.body.querySelector('#mainNav');
         if (!navbarCollapsible) {
@@ -18,13 +18,13 @@ window.addEventListener('DOMContentLoaded', event => {
         }
     };
 
-    // Shrink the navbar
+    // Shrink del navbar
     navbarShrink();
 
-    // Shrink the navbar when page is scrolled
+    // Shrink de cuando se hace scroll
     document.addEventListener('scroll', navbarShrink);
 
-    // Activate Bootstrap scrollspy on the main nav element
+
     const mainNav = document.body.querySelector('#mainNav');
     if (mainNav) {
         new bootstrap.ScrollSpy(document.body, {
@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     };
 
-    // Collapse responsive navbar when toggler is visible
+    // Collapse responsive del navbar 
     const navbarToggler = document.body.querySelector('.navbar-toggler');
     const responsiveNavItems = [].slice.call(
         document.querySelectorAll('#navbarResponsive .nav-link')

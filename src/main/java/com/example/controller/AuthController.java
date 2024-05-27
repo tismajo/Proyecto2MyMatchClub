@@ -7,7 +7,6 @@ import com.example.gestores.GestorUsuarios;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,24 +33,23 @@ public class AuthController {
         List<String> clubesAsistidos = Arrays.asList(formData.getFirst("clubesAsistidos").split(","));
         List<String> accionesPreferidas = Arrays.asList(formData.getFirst("accionesPreferidas").split(","));
 
-        // Realiza el registro del usuario utilizando el GestorUsuarios
-        boolean isRegistered = gestorUsuarios.registrarUsuario(
-                nombreUsuario,
-                contrasena,
-                nombre,
-                carrera,
-                edad,
-                genero,
-                afluenciaPreferida,
-                intereses,
-                clubesAsistidos,
-                accionesPreferidas
-        );
-
-        if (isRegistered) {
+        try {
+            // Realiza el registro del usuario utilizando el GestorUsuarios
+            gestorUsuarios.registrarUsuario(
+                    nombreUsuario,
+                    contrasena,
+                    nombre,
+                    carrera,
+                    edad,
+                    genero,
+                    afluenciaPreferida,
+                    intereses,
+                    clubesAsistidos,
+                    accionesPreferidas
+            );
             return ResponseEntity.ok("Usuario registrado con éxito.");
-        } else {
-            return ResponseEntity.badRequest().body("El nombre de usuario ya está en uso.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
