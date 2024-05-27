@@ -297,6 +297,8 @@
     </div>
 </section>
 
+
+<!-- Sección de login -->
 <!-- Sección de login -->
 <section class="page-section" id="login">
     <div class="container">
@@ -314,7 +316,7 @@
                 <form id="loginForm">
                     <!--  -->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="loginEmail" type="email" placeholder="name@example.com" />
+                        <input class="form-control" id="loginEmail" type="text" placeholder="name@example.com" />
                         <label for="loginEmail">Username</label>
                     </div>
                     <!-- Password -->
@@ -325,10 +327,50 @@
                     <!-- Login Button-->
                     <button class="btn btn-primary btn-xl" id="loginButton" type="submit">Login</button>
                 </form>
+                <div id="loginError" class="alert alert-danger mt-3" style="display: none;">
+                    Nombre de usuario o contraseña incorrectos.
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+   window.location.href = "usuario.html"; // ir a la página del usuario
+
+    const username = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            nombreUsuario: username,
+            contrasena: password
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            window.location.href = "usuario.html"; // ir a la página del usuario
+        } else {
+            document.getElementById("loginError").style.display = "block";
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("loginError").style.display = "block";
+    });
+});
+</script>
+
+
+
+
+
 <!-- Sección de registro -->
 <section class="page-section" id="register">
     <div class="container">
@@ -508,7 +550,13 @@
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/voluntariado.png" alt="..." />
                             <!-- datos Club de voluntariado -->
                             <p class="mb-4"> Miércoles: 15:00 a 16:00 hrs. <br />
-                                Sábado: 9:00 a 10:00 hrs.</p>
+                                Sábado: 9:00 a 10:00 <br />
+                                Lugar: CIT 312 o Reunión de Zoom<br />
+                            
+
+                            </p>
+
+                            
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerrar Ventana
@@ -575,7 +623,7 @@
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/game.png" alt="..." />
                             <!-- datos del club -->
                             <p class="mb-4">De Lunes a viernes exceptuando Miércoles: 10:00 a 13:00 hrs. <br/>
-                                Lugar: Nivel 6 CIT</p>
+                                Lugar: CIT 631</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerrar ventana
@@ -610,7 +658,7 @@
                             <p class="mb-4"> Lunes: 17:30 a 19:00 hrs. <br/>
                                 Viernes: 16:30 a 19:00 hrs.<br/>
                                 Facilitador: William García<br/>
-                                Lugar: Cancha polideportiva UVG.</p>
+                                Lugar: Cancha polideportiva UVG</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerrar ventana
@@ -642,8 +690,9 @@
                             <!-- imagen del Club de Natación -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/natacion.png" alt="..." />
                             <!-- datos del club de natación -->
-                            <p class="mb-4">Facilitador: Alby Aguilar <br/>  Miércoles:
-                                6:3 a.m.
+                            <p class="mb-4">Facilitador: Alby Aguilar <br/>  
+                                Martes: 6:30 - 7:30 <br/>  
+                                Jueves: 6:30 - 7:30
                                 <br/>Lugar: Piscina Colegio Americano de Guatemala</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
@@ -676,7 +725,9 @@
                             <!-- imagen del Club de atletismo -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/atletismo.png" alt="..." />
                             <!-- datos del club de atletismo -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
+                            <p class="mb-4">Facilitador:  Alby Aguilar<br/>  
+                                Lunes: 16:30 - 18:05<br/>  
+                                Miércoles: 16:30 - 18:05
                                 <br/>Lugar: </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
@@ -709,8 +760,11 @@
                             <!-- imagen del Club de marimba -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/marimba.png" alt="..." />
                             <!-- datos del club de marimba -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador:   Gabriel Domingo                                <br/>  
+                                Miércoles: 18:15 - 19:45                                <br/>
+                                Viernes: 14:15 - 16:30
+                                <br/>Lugar: Salón de Música I-100</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -742,8 +796,11 @@
                             <!-- imagen del Club de danza -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/dance.png" alt="..." />
                             <!-- datos del club de danza -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador: Loyda Prado <br/> 
+                                Jueves: 13:00 a 16:00 <br/> 
+                                Lugar: I-201 <br/> 
+                                  </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -775,8 +832,13 @@
                             <!-- imagen del Club de futbol -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/futbol.png" alt="..." />
                             <!-- datos del club de futbol -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador: Erick Arredondo <br/>
+                                Lunes y miércoles: 15:00 a 16:30 <br/>
+                               
+                                Lugar: Cancha polideportiva UVG
+                                
+                                </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -808,8 +870,8 @@
                             <!-- imagen del Club de sign -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/sign.png" alt="..." />
                             <!-- datos del club de sign -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">Sábado: 12:00 a 13:00   <br/> 
+                                <br/>Lugar: Reunión de Zoom</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -841,8 +903,13 @@
                             <!-- imagen del Club de teatro -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/teatro.png" alt="..." />
                             <!-- datos del club de teatro -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador: Donald Monsanto <br/>
+                                 Sábado: 11:00 a 14:00 hrs. <br/>
+        
+                                Lugar: I-201
+
+                            </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -874,8 +941,11 @@
                             <!-- imagen del Club de ukelele -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/ukelele.png" alt="..." />
                             <!-- datos del club de ukelele -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                            
+                                Miércoles: 12:45 a 15:00 hrs.<br/> 
+                                Lugar: Salón de Música I-100
+                            </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -907,8 +977,9 @@
                             <!-- imagen del Club de foto -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/foto.png" alt="..." />
                             <!-- datos del club de foto -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">Miércoles: 18:00 a 19:00 hrs. <br/>
+                                
+                                Lugar: Enlace de Zoom </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -940,8 +1011,14 @@
                             <!-- imagen del Club de voleibol -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/voleibol.png" alt="..." />
                             <!-- datos del club de voleibol -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador: Alex Alvarez <br/>
+                                Lunes: 17:30 a 19:00 hrs. <br/>
+                                Sábado: 9:15 a 10:45 hrs. <br/>
+                                
+                                Lugar: Cancha polideportiva UVG
+                                
+                            </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
