@@ -35,7 +35,7 @@
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#portfolio">Clubs</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#uvg
                             ">UVG</a></li>
-                <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#match">Start Match</a></li>
+                <!--<li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#match">Start Match</a></li>-->
                 <!-- Botones de Login y Register -->
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#login">Login</a></li>
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#register">Register</a></li>
@@ -244,59 +244,6 @@
     </div>
 </section>
 
-<!----------------- Match Section ---------------->
-<section class="page-section" id="match">
-    <div class="container">
-        <!-- start macth-->
-        <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Start Match</h2>
-        <!-- divider users -->
-        <div class="divider-custom">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fas fa-users"></i></div>
-            <div class="divider-custom-line"></div>
-        </div>
-        <!-- form para hacer match -->
-        <div class="row justify-content-center">
-            <div class="col-lg-8 col-xl-7">
-                <!-- * * * * * * Conexión de nodos / Base de Datos * * * * * * * * *-->
-                Responde
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                    <!-- ¿nombre?-->
-                    <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                        <label for="name">------</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">...</div>
-                    </div>
-
-                    <!-- ¿message?-->
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
-                        <label for="message">---</label>
-                        <div class="invalid-feedback" data-sb-feedback="message:required">...</div>
-                    </div>
-                    <!--  success message-->
-
-                    <!-- lo que se ve / el resultado que se dará -->
-                    <!-- has successfully submitted-->
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center mb-3">
-                            <div class="fw-bolder">Bien </div>
-
-                            <br />
-                            <a href=""></a>
-                        </div>
-                    </div>
-
-                    <!--  error message-->
-                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error </div></div>
-                    <!-- subir info  Button-->
-                    <button class="btn btn-primary btn-xl disabled" id="submitButton" type="submit">Hacer Match</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-
 
 <!-- Sección de login -->
 <!-- Sección de login -->
@@ -338,7 +285,7 @@
 <script>
 document.getElementById("loginForm").addEventListener("submit", function(event) {
     event.preventDefault();
-   window.location.href = "usuario.html"; // ir a la página del usuario
+  // window.location.href = "usuario.html"; // ir a la página del usuario
 
     const username = document.getElementById("loginEmail").value;
     const password = document.getElementById("loginPassword").value;
@@ -372,44 +319,38 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
 
 
 <!-- Sección de registro -->
+<!-- Sección de registro -->
 <section class="page-section" id="register">
     <div class="container">
-        <!-- register heading-->
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Register</h2>
-        <!-- divisor -->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fas fa-users"></i></div>
             <div class="divider-custom-line"></div>
-        </div><!-- form de registro -->
+        </div>
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-7">
-                <form id="registerForm" method="POST" action="/api/auth/register" enctype="application/x-www-form-urlencoded">                    <!-- Nombre de usuario -->
+                <form id="registerForm" method="POST" action="/api/auth/register" enctype="application/x-www-form-urlencoded">
                     <div class="form-floating mb-3">
                         <input class="form-control" id="nombreUsuario" name="nombreUsuario" type="text" placeholder="Enter your username..." />
                         <label for="nombreUsuario">Username</label>
                     </div>
-                    <!-- Contraseña -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="contrasena" name="contrasena" type="password" placeholder="Enter your password..." />
                         <label for="contrasena">Password</label>
                     </div>
-                    <!-- Nombre -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="nombre" name="nombre" type="text" placeholder="Enter your full name..." />
                         <label for="nombre">Full Name</label>
                     </div>
-                    <!-- Carrera -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="carrera" name="carrera" type="text" placeholder="Enter your major..." />
                         <label for="carrera">Major</label>
                     </div>
-                    <!-- Edad -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="edad" name="edad" type="number" placeholder="Enter your age..." />
                         <label for="edad">Age</label>
                     </div>
-                    <!-- Género -->
                     <div class="form-floating mb-3">
                         <select class="form-select" id="genero" name="genero">
                             <option value="male">Male</option>
@@ -418,35 +359,106 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                         </select>
                         <label for="genero">Gender</label>
                     </div>
-                    <!-- Afluencia Preferida -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="afluenciaPreferida" name="afluenciaPreferida" type="text" placeholder="Enter your preferred hangout spot..." />
                         <label for="afluenciaPreferida">Preferred Hangout Spot</label>
                     </div>
-                    <!-- Intereses -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="intereses" name="intereses" type="text" placeholder="Enter your interests..." />
                         <label for="intereses">Interests (comma separated)</label>
                     </div>
-                    <!-- Clubes Asistidos -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="clubesAsistidos" name="clubesAsistidos" type="text" placeholder="Enter clubs you've attended..." />
                         <label for="clubesAsistidos">Clubs Attended (comma separated)</label>
                     </div>
-                    <!-- Acciones Preferidas -->
                     <div class="form-floating mb-3">
                         <input class="form-control" id="accionesPreferidas" name="accionesPreferidas" type="text" placeholder="Enter your preferred activities..." />
                         <label for="accionesPreferidas">Preferred Activities (comma separated)</label>
                     </div>
-                    <!-- Register Button-->
-                    <button class="btn btn-primary btn-xl" id="registerButton" type="submit">Register</button>                </form>
+                    <button class="btn btn-primary btn-xl" id="registerButton" type="submit">Register</button>
+                </form>
                 <div id="registroExitoso" class="alert alert-success mt-3" style="display: none;">
                     ¡Registro exitoso! Puedes iniciar sesión ahora.
+                </div>
+                <div id="registroError" class="alert alert-danger mt-3" style="display: none;">
+                    Hubo un error en el registro. Intenta nuevamente.
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+    const searchParams = new URLSearchParams();
+    for (const pair of formData) {
+        searchParams.append(pair[0], pair[1]);
+    }
+
+    fetch('/api/auth/register', {
+        method: 'POST',
+        body: searchParams,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.includes("Usuario registrado con éxito")) {
+            document.getElementById('registroExitoso').style.display = 'block';
+            document.getElementById('registroError').style.display = 'none';
+        } else {
+            document.getElementById('registroError').style.display = 'block';
+            document.getElementById('registroExitoso').style.display = 'none';
+        }
+    })
+    .catch(error => {
+        document.getElementById('registroError').style.display = 'block';
+        document.getElementById('registroExitoso').style.display = 'none';
+    });
+});
+</script>
+
+
+<script>
+document.getElementById('registerForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    
+    const formData = new FormData(this);
+    const searchParams = new URLSearchParams();
+    for (const pair of formData) {
+        searchParams.append(pair[0], pair[1]);
+    }
+
+    fetch('/api/auth/register', {
+        method: 'POST',
+        body: searchParams,
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(response => response.text())
+    .then(data => {
+        if (data.includes("Usuario registrado con éxito")) {
+            document.getElementById('registroExitoso').style.display = 'block';
+            document.getElementById('registroError').style.display = 'none';
+        } else {
+            document.getElementById('registroError').style.display = 'block';
+            document.getElementById('registroExitoso').style.display = 'none';
+        }
+    })
+    .catch(error => {
+        document.getElementById('registroError').style.display = 'block';
+        document.getElementById('registroExitoso').style.display = 'none';
+    });
+});
+</script>
+
+
+
 
 <!---------------- Footer ----------------------->
 <footer class="footer text-center">
@@ -550,7 +562,13 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/voluntariado.png" alt="..." />
                             <!-- datos Club de voluntariado -->
                             <p class="mb-4"> Miércoles: 15:00 a 16:00 hrs. <br />
-                                Sábado: 9:00 a 10:00 hrs.</p>
+                                Sábado: 9:00 a 10:00 <br />
+                                Lugar: CIT 312 o Reunión de Zoom<br />
+                            
+
+                            </p>
+
+                            
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerrar Ventana
@@ -617,7 +635,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/game.png" alt="..." />
                             <!-- datos del club -->
                             <p class="mb-4">De Lunes a viernes exceptuando Miércoles: 10:00 a 13:00 hrs. <br/>
-                                Lugar: Nivel 6 CIT</p>
+                                Lugar: CIT 631</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerrar ventana
@@ -652,7 +670,7 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <p class="mb-4"> Lunes: 17:30 a 19:00 hrs. <br/>
                                 Viernes: 16:30 a 19:00 hrs.<br/>
                                 Facilitador: William García<br/>
-                                Lugar: Cancha polideportiva UVG.</p>
+                                Lugar: Cancha polideportiva UVG</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerrar ventana
@@ -684,8 +702,9 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de Natación -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/natacion.png" alt="..." />
                             <!-- datos del club de natación -->
-                            <p class="mb-4">Facilitador: Alby Aguilar <br/>  Miércoles:
-                                6:3 a.m.
+                            <p class="mb-4">Facilitador: Alby Aguilar <br/>  
+                                Martes: 6:30 - 7:30 <br/>  
+                                Jueves: 6:30 - 7:30
                                 <br/>Lugar: Piscina Colegio Americano de Guatemala</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
@@ -718,7 +737,9 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de atletismo -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/atletismo.png" alt="..." />
                             <!-- datos del club de atletismo -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
+                            <p class="mb-4">Facilitador:  Alby Aguilar<br/>  
+                                Lunes: 16:30 - 18:05<br/>  
+                                Miércoles: 16:30 - 18:05
                                 <br/>Lugar: </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
@@ -751,8 +772,11 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de marimba -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/marimba.png" alt="..." />
                             <!-- datos del club de marimba -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador:   Gabriel Domingo                                <br/>  
+                                Miércoles: 18:15 - 19:45                                <br/>
+                                Viernes: 14:15 - 16:30
+                                <br/>Lugar: Salón de Música I-100</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -784,8 +808,11 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de danza -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/dance.png" alt="..." />
                             <!-- datos del club de danza -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador: Loyda Prado <br/> 
+                                Jueves: 13:00 a 16:00 <br/> 
+                                Lugar: I-201 <br/> 
+                                  </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -817,8 +844,13 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de futbol -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/futbol.png" alt="..." />
                             <!-- datos del club de futbol -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador: Erick Arredondo <br/>
+                                Lunes y miércoles: 15:00 a 16:30 <br/>
+                               
+                                Lugar: Cancha polideportiva UVG
+                                
+                                </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -850,8 +882,8 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de sign -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/sign.png" alt="..." />
                             <!-- datos del club de sign -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">Sábado: 12:00 a 13:00   <br/> 
+                                <br/>Lugar: Reunión de Zoom</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -883,8 +915,13 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de teatro -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/teatro.png" alt="..." />
                             <!-- datos del club de teatro -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador: Donald Monsanto <br/>
+                                 Sábado: 11:00 a 14:00 hrs. <br/>
+        
+                                Lugar: I-201
+
+                            </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -916,8 +953,11 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de ukelele -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/ukelele.png" alt="..." />
                             <!-- datos del club de ukelele -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                            
+                                Miércoles: 12:45 a 15:00 hrs.<br/> 
+                                Lugar: Salón de Música I-100
+                            </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -949,8 +989,9 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de foto -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/foto.png" alt="..." />
                             <!-- datos del club de foto -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">Miércoles: 18:00 a 19:00 hrs. <br/>
+                                
+                                Lugar: Enlace de Zoom </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -982,8 +1023,14 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                             <!-- imagen del Club de voleibol -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/voleibol.png" alt="..." />
                             <!-- datos del club de voleibol -->
-                            <p class="mb-4">Facilitador:  <br/>  Hora:
-                                <br/>Lugar: </p>
+                            <p class="mb-4">
+                                Facilitador: Alex Alvarez <br/>
+                                Lunes: 17:30 a 19:00 hrs. <br/>
+                                Sábado: 9:15 a 10:45 hrs. <br/>
+                                
+                                Lugar: Cancha polideportiva UVG
+                                
+                            </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
