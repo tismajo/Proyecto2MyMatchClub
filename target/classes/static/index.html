@@ -360,7 +360,11 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                         <label for="genero">Gender</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="afluenciaPreferida" name="afluenciaPreferida" type="text" placeholder="Enter your preferred hangout spot..." />
+                        <select class="form-select" id="afluenciaPreferida" name="afluenciaPreferida">
+                            <option value="alta">Alta</option>
+                            <option value="media">Media</option>
+                            <option value="baja">Baja</option>
+                        </select>
                         <label for="afluenciaPreferida">Preferred Hangout Spot</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -372,8 +376,18 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
                         <label for="clubesAsistidos">Clubs Attended (comma separated)</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="accionesPreferidas" name="accionesPreferidas" type="text" placeholder="Enter your preferred activities..." />
-                        <label for="accionesPreferidas">Preferred Activities (comma separated)</label>
+                        <select class="form-select" id="accionesPreferidas" name="accionesPreferidas">
+                            <option value="cantar">cantar</option>
+                            <option value="tocar">tocar</option>
+                            <option value="interpretar">interpretar</option>
+                            <option value="bailar">bailar</option>
+                            <option value="crear">crear</option>
+                            <option value="jugar">jugar</option>
+                            <option value="pensar">pensar</option>
+                            <option value="ayudar">ayudar</option>
+                            <option value="ejercitar">ejercitar</option>
+                        </select>
+                        <label for="accionesPreferidas">Preferred Hangout Spot</label>
                     </div>
                     <button class="btn btn-primary btn-xl" id="registerButton" type="submit">Register</button>
                 </form>

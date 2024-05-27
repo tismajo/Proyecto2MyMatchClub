@@ -63,7 +63,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/{username}/recomendaciones")
+    @GetMapping("/{username}/recommendations")
     public ResponseEntity<List<Map<String, Object>>> obtenerRecomendaciones(@PathVariable String username, @RequestParam int k) {
         List<Map<String, Object>> recomendaciones = gestorUsuarios.recommendClubsKNN(username, k);
         if (recomendaciones != null && !recomendaciones.isEmpty()) {
