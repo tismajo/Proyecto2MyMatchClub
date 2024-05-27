@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -24,7 +23,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ms-auto">
-               <!--  <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#match">Start Match</a></li> -->
                 <li class="nav-item mx-0 mx-lg-1"><a class="nav-link py-3 px-0 px-lg-3 rounded" href="#recommendations">My Clubs</a></li>
             </ul>
         </div>
@@ -44,7 +42,6 @@
     </div>
 </header>
 
-
 <section class="page-section bg-light" id="recommendations">
     <div class="container">
         <h2 class="page-section-heading text-center text-uppercase text-secondary mb-0">Mis Recomendaciones</h2>
@@ -56,7 +53,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div id="recommendationList" class="list-group">
-                    <!--  se deberían de insertar las recomendaciones si funciona -->
+                    <!-- Se deberían de insertar las recomendaciones si funciona -->
                 </div>
             </div>
         </div>
@@ -97,8 +94,26 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const username = "user123"; // usuario 
-        fetch(`/recommendations?username=${username}`)
+        // obtener el valor de una cookie por le nombre
+        function getCookie(name) {
+            let cookieArr = document.cookie.split(";");
+            for (let i = 0; i < cookieArr.length; i++) {
+                let cookiePair = cookieArr[i].split("=");
+                if (name == cookiePair[0].trim()) {
+                    return decodeURIComponent(cookiePair[1]);
+                }
+            }
+            return null;
+        }
+
+        // obtiene el nombre de usuario de la cookie
+        const username = getCookie("username");
+        if (!username) {
+            console.error('No se pudo obtener el nombre de usuario de la cookie');
+            return;
+        }
+
+        fetch(`/api/auth/recommendations?username=${username}&k=5`)
             .then(response => response.json())
             .then(data => {
                 const recommendationList = document.getElementById("recommendationList");
@@ -106,7 +121,9 @@
                     const listItem = document.createElement("a");
                     listItem.href = "#";
                     listItem.className = "list-group-item list-group-item-action";
-                    listItem.textContent = recommendation.club;
+                    listItem.innerHTML = `<h5 class="mb-1">${recommendation.club}</h5>
+                                          <p class="mb-1">Facilitador: ${recommendation.facilitador}</p>
+                                          <small>Concurrencia: ${recommendation.concurrencia}, Lugar: ${recommendation.lugar}</small>`;
                     recommendationList.appendChild(listItem);
                 });
             })
