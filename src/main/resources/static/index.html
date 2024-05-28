@@ -244,8 +244,6 @@
     </div>
 </section>
 
-
-<!-- Sección de login -->
 <!-- Sección de login -->
 <section class="page-section" id="login">
     <div class="container">
@@ -273,9 +271,17 @@
                     </div>
                     <!-- Login Button-->
                     <button class="btn btn-primary btn-xl" id="loginButton" type="submit">Login</button>
+                    <!-- Delete Button-->
+                    <button class="btn btn-danger btn-xl" id="deleteButton" type="button">Eliminar Usuario</button>
                 </form>
                 <div id="loginError" class="alert alert-danger mt-3" style="display: none;">
                     Nombre de usuario o contraseña incorrectos.
+                </div>
+                <div id="deleteError" class="alert alert-danger mt-3" style="display: none;">
+                    Error al eliminar el usuario.
+                </div>
+                <div id="deleteSuccess" class="alert alert-success mt-3" style="display: none;">
+                    Usuario eliminado con éxito.
                 </div>
             </div>
         </div>
@@ -283,39 +289,56 @@
 </section>
 
 <script>
-document.getElementById("loginForm").addEventListener("submit", function(event) {
-    event.preventDefault();
-  // window.location.href = "usuario.html"; // ir a la página del usuario
+    document.getElementById("loginForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        const username = document.getElementById("loginEmail").value;
+        const password = document.getElementById("loginPassword").value;
 
-    const username = document.getElementById("loginEmail").value;
-    const password = document.getElementById("loginPassword").value;
-
-    fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            nombreUsuario: username,
-            contrasena: password
+        fetch("/api/auth/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nombreUsuario: username,
+                contrasena: password
+            })
         })
-    })
-    .then(response => {
-        if (response.ok) {
-            window.location.href = "usuario.html"; // ir a la página del usuario
-        } else {
-            document.getElementById("loginError").style.display = "block";
-        }
-    })
-    .catch(error => {
-        console.error("Error:", error);
-        document.getElementById("loginError").style.display = "block";
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = "usuario.html"; // ir a la página del usuario
+                } else {
+                    document.getElementById("loginError").style.display = "block";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("loginError").style.display = "block";
+            });
     });
-});
+
+    document.getElementById("deleteButton").addEventListener("click", function(event) {
+        const username = document.getElementById("loginEmail").value;
+
+        fetch(`/api/auth/delete/${username}`, {
+            method: "DELETE"
+        })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById("deleteSuccess").style.display = "block";
+                    document.getElementById("deleteError").style.display = "none";
+                } else {
+                    document.getElementById("deleteError").style.display = "block";
+                    document.getElementById("deleteSuccess").style.display = "none";
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                document.getElementById("deleteError").style.display = "block";
+                document.getElementById("deleteSuccess").style.display = "none";
+            });
+    });
 </script>
-
-
-
 
 
 <!-- Sección de registro -->
@@ -440,7 +463,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
 <script>
 document.getElementById('registerForm').addEventListener('submit', function(event) {
     event.preventDefault();
-    
+
     const formData = new FormData(this);
     const searchParams = new URLSearchParams();
     for (const pair of formData) {
@@ -578,11 +601,11 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <p class="mb-4"> Miércoles: 15:00 a 16:00 hrs. <br />
                                 Sábado: 9:00 a 10:00 <br />
                                 Lugar: CIT 312 o Reunión de Zoom<br />
-                            
+
 
                             </p>
 
-                            
+
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerrar Ventana
@@ -716,8 +739,8 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <!-- imagen del Club de Natación -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/natacion.png" alt="..." />
                             <!-- datos del club de natación -->
-                            <p class="mb-4">Facilitador: Alby Aguilar <br/>  
-                                Martes: 6:30 - 7:30 <br/>  
+                            <p class="mb-4">Facilitador: Alby Aguilar <br/>
+                                Martes: 6:30 - 7:30 <br/>
                                 Jueves: 6:30 - 7:30
                                 <br/>Lugar: Piscina Colegio Americano de Guatemala</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -751,8 +774,8 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <!-- imagen del Club de atletismo -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/atletismo.png" alt="..." />
                             <!-- datos del club de atletismo -->
-                            <p class="mb-4">Facilitador:  Alby Aguilar<br/>  
-                                Lunes: 16:30 - 18:05<br/>  
+                            <p class="mb-4">Facilitador:  Alby Aguilar<br/>
+                                Lunes: 16:30 - 18:05<br/>
                                 Miércoles: 16:30 - 18:05
                                 <br/>Lugar: </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -787,7 +810,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/marimba.png" alt="..." />
                             <!-- datos del club de marimba -->
                             <p class="mb-4">
-                                Facilitador:   Gabriel Domingo                                <br/>  
+                                Facilitador:   Gabriel Domingo                                <br/>
                                 Miércoles: 18:15 - 19:45                                <br/>
                                 Viernes: 14:15 - 16:30
                                 <br/>Lugar: Salón de Música I-100</p>
@@ -823,9 +846,9 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/dance.png" alt="..." />
                             <!-- datos del club de danza -->
                             <p class="mb-4">
-                                Facilitador: Loyda Prado <br/> 
-                                Jueves: 13:00 a 16:00 <br/> 
-                                Lugar: I-201 <br/> 
+                                Facilitador: Loyda Prado <br/>
+                                Jueves: 13:00 a 16:00 <br/>
+                                Lugar: I-201 <br/>
                                   </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
@@ -861,9 +884,9 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <p class="mb-4">
                                 Facilitador: Erick Arredondo <br/>
                                 Lunes y miércoles: 15:00 a 16:30 <br/>
-                               
+
                                 Lugar: Cancha polideportiva UVG
-                                
+
                                 </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
@@ -896,7 +919,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <!-- imagen del Club de sign -->
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/sign.png" alt="..." />
                             <!-- datos del club de sign -->
-                            <p class="mb-4">Sábado: 12:00 a 13:00   <br/> 
+                            <p class="mb-4">Sábado: 12:00 a 13:00   <br/>
                                 <br/>Lugar: Reunión de Zoom</p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
@@ -932,7 +955,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <p class="mb-4">
                                 Facilitador: Donald Monsanto <br/>
                                  Sábado: 11:00 a 14:00 hrs. <br/>
-        
+
                                 Lugar: I-201
 
                             </p>
@@ -968,8 +991,8 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/ukelele.png" alt="..." />
                             <!-- datos del club de ukelele -->
                             <p class="mb-4">
-                            
-                                Miércoles: 12:45 a 15:00 hrs.<br/> 
+
+                                Miércoles: 12:45 a 15:00 hrs.<br/>
                                 Lugar: Salón de Música I-100
                             </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
@@ -1004,7 +1027,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <img class="img-fluid rounded mb-5" src="assets/img/portfolio/foto.png" alt="..." />
                             <!-- datos del club de foto -->
                             <p class="mb-4">Miércoles: 18:00 a 19:00 hrs. <br/>
-                                
+
                                 Lugar: Enlace de Zoom </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
@@ -1041,9 +1064,9 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                                 Facilitador: Alex Alvarez <br/>
                                 Lunes: 17:30 a 19:00 hrs. <br/>
                                 Sábado: 9:15 a 10:45 hrs. <br/>
-                                
+
                                 Lugar: Cancha polideportiva UVG
-                                
+
                             </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>

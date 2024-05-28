@@ -64,12 +64,22 @@ public class AuthController {
     }
 
     @GetMapping("/{username}/recommendations")
-    public ResponseEntity<List<Map<String, Object>>> obtenerRecomendaciones(@PathVariable String username, @RequestParam int k) {
-        List<Map<String, Object>> recomendaciones = gestorUsuarios.recommendClubsKNN(username, k);
+    public ResponseEntity<List<Map<String, Object>>> obtenerRecomendaciones(@PathVariable String username) {
+        List<Map<String, Object>> recomendaciones = gestorUsuarios.recommendClubsKNN(username);
         if (recomendaciones != null && !recomendaciones.isEmpty()) {
             return ResponseEntity.ok(recomendaciones);
         } else {
             return ResponseEntity.noContent().build();
+        }
+    }
+
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<String> eliminarUsuario(@PathVariable String username) {
+        try {
+            gestorUsuarios.eliminarUsuario(username);
+            return ResponseEntity.ok("Usuario eliminado con éxito.");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al eliminar el usuario.");
         }
     }
 }

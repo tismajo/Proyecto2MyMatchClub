@@ -33,13 +33,12 @@ public class GestorUsuarios {
                 @Override
                 public Boolean execute(Transaction tx) {
                     var result = tx.run("MATCH (u:Usuario {username: $username}) RETURN u", parameters("username", nombreUsuario));
-                    return result.hasNext(); // Retorna true si hay algún resultado (es decir, el usuario existe), de lo contrario retorna false
+                    return result.hasNext();
                 }
             });
         }
     }
 
-    // Método para agregar un usuario con sus preferencias
     public void registrarUsuario(String nombreUsuario, String contrasena, String nombre, String carrera, int edad, String genero,
                                  String afluenciaPreferida, List<String> intereses, List<String> clubesAsistidos, List<String> accionesPreferidas) {
         if (!existeUsuario(nombreUsuario)) {
@@ -47,14 +46,9 @@ public class GestorUsuarios {
                 session.writeTransaction(new TransactionWork<Void>() {
                     @Override
                     public Void execute(Transaction tx) {
-                        // Encode contraseña
                         String encodedPassword = passwordEncoder.encode(contrasena);
-
-                        // Crear el nodo de usuario
                         tx.run("CREATE (u:Usuario {username: $username, password: $password, nombre: $nombre, carrera: $carrera, edad: $edad, genero: $genero, afluenciaPreferida: $afluenciaPreferida})",
                                 parameters("username", nombreUsuario, "password", encodedPassword, "nombre", nombre, "carrera", carrera, "edad", edad, "genero", genero, "afluenciaPreferida", afluenciaPreferida));
-
-                        // Crear relaciones entre el usuario y los nodos de acción
                         for (String accion : accionesPreferidas) {
                             tx.run("MATCH (u:Usuario {username: $username}), (a:Accion {nombre: $accion}) " +
                                     "CREATE (u)-[:INTERESA_EN]->(a)", parameters("username", nombreUsuario, "accion", accion));
@@ -65,6 +59,18 @@ public class GestorUsuarios {
             }
         } else {
             throw new IllegalArgumentException("El nombre de usuario ya está en uso.");
+        }
+    }
+
+    public void eliminarUsuario(String nombreUsuario) {
+        try (Session session = driver.session()) {
+            session.writeTransaction(new TransactionWork<Void>() {
+                @Override
+                public Void execute(Transaction tx) {
+                    tx.run("MATCH (u:Usuario {username: $username}) DETACH DELETE u", parameters("username", nombreUsuario));
+                    return null;
+                }
+            });
         }
     }
 
@@ -89,7 +95,7 @@ public class GestorUsuarios {
         }
     }
 
-    public List<Map<String, Object>> recommendClubsKNN(String username, int k) {
+    public List<Map<String, Object>> recommendClubsKNN(String username) {
         try (Session session = driver.session()) {
             return session.readTransaction(new TransactionWork<List<Map<String, Object>>>() {
                 @Override
