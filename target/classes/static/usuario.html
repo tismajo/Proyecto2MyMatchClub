@@ -53,14 +53,12 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div id="recommendationList" class="list-group">
-                    <!-- Se insertan las recomendaciones del usuario -->
+                    <!-- Se deberían de insertar las recomendaciones si funciona -->
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-
 
 <footer class="footer text-center">
     <div class="container">
@@ -95,64 +93,6 @@
 </div>
 
 <script>
-    // ----- CAMBIOS PARA INSERTAR CUADROS DE CLUBS
-
-    const allClubs = [
-            {
-                id: "clubs1",
-                name: "Club de Ajedrez",
-                facilitator: "Ennio Pérez",
-                schedule: ["Martes: 11:00 a 12:00 hrs.", "Viernes: 12:30 a 13:30 hrs."],
-                location: "Plaza Paiz Riera",
-                image: "assets/img/portfolio/ajedrez.png"
-            },
-            {
-                id: "clubs2",
-                name: "Club de Voluntariado",
-                facilitator: "Ennio Pérez",
-                schedule: ["Miércoles: 15:00 a 16:00 hrs.", "Sábado: 9:00 a 10:00 hrs"],
-                location: "CIT 312 o Reunión de Zoom",
-                image: "assets/img/portfolio/voluntariado.png"
-            },
-            {
-                id: "clubs3",
-                name: "Club de Guitarra",
-                facilitator: "Axel Méndez",
-                schedule: ["ueves: 12:30 a 14:00 hrs"],
-                location: "G-205",
-                image: "assets/img/portfolio/guitarra.png"
-            },
-            {
-                id: "clubs4",
-                name: "Club de Gaming",
-                facilitator: "Ennio Pérez",
-                schedule: ["De Lunes a viernes exceptuando Miércoles: 10:00 a 13:00 hrs."],
-                location: "CIT 631",
-                image: "assets/img/portfolio/game.png"
-            },
-            {
-                id: "clubs5",
-                name: "Club de Baloncesto",
-                facilitator: "William García",
-                schedule: ["Lunes: 17:30 a 19:00 hrs","Viernes: 16:30 a 19:00 hrs."],
-                location: "Cancha polideportiva UVG",
-                image: "assets/img/portfolio/basket.png"
-            },
-            {
-                id: "clubs6",
-                name: "Club de Natación",
-                facilitator: "Alby Aguilar",
-                schedule: [" Martes: 6:30 - 7:30 hrs.","Jueves: 6:30 - 7:30 hrs."],
-                location: "Piscina Colegio Americano de Guatemala",
-                image: "assets/img/portfolio/natacion.png"
-            }
-            
-        ];
-
-
-
-    // ---- 
-
     document.addEventListener("DOMContentLoaded", function() {
         // obtener el valor de una cookie por el nombre
         function getCookie(name) {
@@ -198,72 +138,11 @@
                 recommendationList.innerHTML = "";
                 // Iteramos sobre las recomendaciones y las agregamos a la lista
                 data.forEach(recommendation => {
-                    // CAMBIOS IMPRIMIR CLUBS
-                    const club = allClubs.find(c => c.name === recommendation.club);
-                   
-                   // const listItem = document.createElement("a");
-                    //listItem.href = "#";
-                    //listItem.className = "list-group-item list-group-item-action";
-                    //listItem.innerHTML = `<h5 class="mb-1">${recommendation.club}</h5>`;
-                    //recommendationList.appendChild(listItem);
-
-                    if(club){
-
-                            //  de la lista de recomendaciones
-                            const listItem = document.createElement("a");
-                            listItem.href = `#${club.id}`;
-                            listItem.className = "list-group-item list-group-item-action";
-                            listItem.dataset.bsToggle = "modal";
-                            listItem.innerHTML = `
-                                <h5 class="mb-1">${club.name}</h5>
-                                <p class="mb-1">Facilitador: ${club.facilitator}</p>
-                                <small>Concurrencia: ${recommendation.concurrencia}, Lugar: ${club.location}</small>
-                            `;
-                            recommendationList.appendChild(listItem);
-
-                        // Crear modal para el club
-                        const modal = document.createElement("div");
-                        modal.className = "portfolio-modal modal fade";
-                        modal.id = club.id;
-                        modal.tabIndex = -1;
-                        modal.setAttribute("aria-labelledby", club.id);
-                        modal.setAttribute("aria-hidden", "true");
-                        modal.innerHTML = `
-                            <div class="modal-dialog modal-xl">
-                                <div class="modal-content">
-                                    <div class="modal-header border-0">
-                                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body text-center pb-5">
-                                        <div class="container">
-                                            <div class="row justify-content-center">
-                                                <div class="col-lg-8">
-                                                    <h2 class="portfolio-modal-title text-secondary text-uppercase mb-0">${club.name}</h2>
-                                                    <div class="divider-custom">
-                                                        <div class="divider-custom-line"></div>
-                                                        <div class="divider-custom-icon"><i class="fas fa-users"></i></div>
-                                                        <div class="divider-custom-line"></div>
-                                                    </div>
-                                                    <img class="img-fluid rounded mb-5" src="${club.image}" alt="${club.name}" />
-                                                    <p class="mb-4">
-                                                        ${club.schedule.join("<br />")}<br />
-                                                        Facilitador: ${club.facilitator}<br />
-                                                        Lugar: ${club.location}
-                                                    </p>
-                                                    <button class="btn btn-primary" data-bs-dismiss="modal">
-                                                        <i class="fas fa-xmark fa-fw"></i>
-                                                        Cerrar ventana
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
-                        modalsContainer.appendChild(modal);
-                    }
-
+                    const listItem = document.createElement("a");
+                    listItem.href = "#";
+                    listItem.className = "list-group-item list-group-item-action";
+                    listItem.innerHTML = `<h5 class="mb-1">${recommendation.club}</h5>`;
+                    recommendationList.appendChild(listItem);
                 });
             })
             .catch(error => {
