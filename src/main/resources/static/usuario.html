@@ -114,8 +114,16 @@
         }
 
         fetch(`/api/auth/recommendations?username=${username}&k=5`)
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al obtener las recomendaciones');
+                }
+                return response.json();
+            })
             .then(data => {
+                if (!Array.isArray(data)) {
+                    throw new Error('Los datos recibidos no son un array');
+                }
                 const recommendationList = document.getElementById("recommendationList");
                 data.forEach(recommendation => {
                     const listItem = document.createElement("a");
@@ -127,8 +135,14 @@
                     recommendationList.appendChild(listItem);
                 });
             })
-            .catch(error => console.error('Error:', error));
+            .catch(error => {
+                console.error('Error:', error);
+                const errorElement = document.createElement("p");
+                errorElement.textContent = "Ocurrió un error al obtener las recomendaciones.";
+                recommendationList.appendChild(errorElement);
+            });
     });
 </script>
+
 </body>
 </html>

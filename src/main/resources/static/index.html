@@ -306,6 +306,7 @@
         })
             .then(response => {
                 if (response.ok) {
+                    document.cookie = `username=${username}`;
                     window.location.href = "usuario.html"; // ir a la página del usuario
                 } else {
                     document.getElementById("loginError").style.display = "block";
@@ -316,29 +317,8 @@
                 document.getElementById("loginError").style.display = "block";
             });
     });
-
-    document.getElementById("deleteButton").addEventListener("click", function(event) {
-        const username = document.getElementById("loginEmail").value;
-
-        fetch(`/api/auth/delete/${username}`, {
-            method: "DELETE"
-        })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById("deleteSuccess").style.display = "block";
-                    document.getElementById("deleteError").style.display = "none";
-                } else {
-                    document.getElementById("deleteError").style.display = "block";
-                    document.getElementById("deleteSuccess").style.display = "none";
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                document.getElementById("deleteError").style.display = "block";
-                document.getElementById("deleteSuccess").style.display = "none";
-            });
-    });
 </script>
+
 
 
 <!-- Sección de registro -->
