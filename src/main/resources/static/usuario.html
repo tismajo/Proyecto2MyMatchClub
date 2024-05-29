@@ -94,7 +94,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        // obtener el valor de una cookie por le nombre
+        // obtener el valor de una cookie por el nombre
         function getCookie(name) {
             let cookieArr = document.cookie.split(";");
             for (let i = 0; i < cookieArr.length; i++) {
@@ -113,25 +113,35 @@
             return;
         }
 
-        fetch(`/api/auth/recommendations?username=${username}&k=5`)
+        const recommendationList = document.getElementById("recommendationList");
+
+        fetch(`/api/auth/${username}/recommendations?k=5`)
             .then(response => {
-                if (!response.ok) {
+                console.log('Respuesta del servidor:', response); // Agregar log para depuración
+                if (response.status === 204) {
+                    console.warn('No hay recomendaciones disponibles.');
+                    const noContentElement = document.createElement("p");
+                    noContentElement.textContent = "No hay recomendaciones disponibles.";
+                    recommendationList.appendChild(noContentElement);
+                    return [];
+                } else if (!response.ok) {
                     throw new Error('Error al obtener las recomendaciones');
                 }
                 return response.json();
             })
             .then(data => {
+                console.log('Datos recibidos:', data); // Agregar log para depuración
                 if (!Array.isArray(data)) {
                     throw new Error('Los datos recibidos no son un array');
                 }
-                const recommendationList = document.getElementById("recommendationList");
+                // Limpiamos la lista antes de agregar nuevas recomendaciones
+                recommendationList.innerHTML = "";
+                // Iteramos sobre las recomendaciones y las agregamos a la lista
                 data.forEach(recommendation => {
                     const listItem = document.createElement("a");
                     listItem.href = "#";
                     listItem.className = "list-group-item list-group-item-action";
-                    listItem.innerHTML = `<h5 class="mb-1">${recommendation.club}</h5>
-                                          <p class="mb-1">Facilitador: ${recommendation.facilitador}</p>
-                                          <small>Concurrencia: ${recommendation.concurrencia}, Lugar: ${recommendation.lugar}</small>`;
+                    listItem.innerHTML = `<h5 class="mb-1">${recommendation.club}</h5>`;
                     recommendationList.appendChild(listItem);
                 });
             })
@@ -142,6 +152,7 @@
                 recommendationList.appendChild(errorElement);
             });
     });
+
 </script>
 
 </body>
