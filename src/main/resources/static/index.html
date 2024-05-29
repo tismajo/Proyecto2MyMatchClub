@@ -159,7 +159,7 @@
                 </div>
             </div>
             <!-- portfolio Club  10-->
-             <div class="col-md-9 col-lg-4 mb-5">
+            <div class="col-md-9 col-lg-4 mb-5">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#Club10">
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100    w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
@@ -177,7 +177,7 @@
                 </div>
             </div>
             <!-- portfolio Club  12-->
-             <div class="col-md-9 col-lg-4 mb-5">
+            <div class="col-md-9 col-lg-4 mb-5">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#Club12">
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100    w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
@@ -195,7 +195,7 @@
                 </div>
             </div>
             <!-- portfolio Club  14-->
-             <div class="col-md-9 col-lg-4 mb-5">
+            <div class="col-md-9 col-lg-4 mb-5">
                 <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#Club14">
                     <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100    w-100">
                         <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
@@ -306,6 +306,7 @@
         })
             .then(response => {
                 if (response.ok) {
+                    document.cookie = `username=${username}`;
                     window.location.href = "usuario.html"; // ir a la página del usuario
                 } else {
                     document.getElementById("loginError").style.display = "block";
@@ -316,29 +317,8 @@
                 document.getElementById("loginError").style.display = "block";
             });
     });
-
-    document.getElementById("deleteButton").addEventListener("click", function(event) {
-        const username = document.getElementById("loginEmail").value;
-
-        fetch(`/api/auth/delete/${username}`, {
-            method: "DELETE"
-        })
-            .then(response => {
-                if (response.ok) {
-                    document.getElementById("deleteSuccess").style.display = "block";
-                    document.getElementById("deleteError").style.display = "none";
-                } else {
-                    document.getElementById("deleteError").style.display = "block";
-                    document.getElementById("deleteSuccess").style.display = "none";
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                document.getElementById("deleteError").style.display = "block";
-                document.getElementById("deleteSuccess").style.display = "none";
-            });
-    });
 </script>
+
 
 
 <!-- Sección de registro -->
@@ -426,72 +406,72 @@
 </section>
 
 <script>
-document.getElementById('registerForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    const formData = new FormData(this);
-    const searchParams = new URLSearchParams();
-    for (const pair of formData) {
-        searchParams.append(pair[0], pair[1]);
-    }
+        const formData = new FormData(this);
+        const searchParams = new URLSearchParams();
+        for (const pair of formData) {
+            searchParams.append(pair[0], pair[1]);
+        }
 
-    fetch('/api/auth/register', {
-        method: 'POST',
-        body: searchParams,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
-    .then(response => response.text())
-    .then(data => {
-        if (data.includes("Usuario registrado con éxito")) {
-            document.getElementById('registroExitoso').style.display = 'block';
-            document.getElementById('registroError').style.display = 'none';
-        } else {
-            document.getElementById('registroError').style.display = 'block';
-            document.getElementById('registroExitoso').style.display = 'none';
-        }
-    })
-    .catch(error => {
-        document.getElementById('registroError').style.display = 'block';
-        document.getElementById('registroExitoso').style.display = 'none';
+        fetch('/api/auth/register', {
+            method: 'POST',
+            body: searchParams,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data.includes("Usuario registrado con éxito")) {
+                    document.getElementById('registroExitoso').style.display = 'block';
+                    document.getElementById('registroError').style.display = 'none';
+                } else {
+                    document.getElementById('registroError').style.display = 'block';
+                    document.getElementById('registroExitoso').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                document.getElementById('registroError').style.display = 'block';
+                document.getElementById('registroExitoso').style.display = 'none';
+            });
     });
-});
 </script>
 
 
 <script>
-document.getElementById('registerForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    const formData = new FormData(this);
-    const searchParams = new URLSearchParams();
-    for (const pair of formData) {
-        searchParams.append(pair[0], pair[1]);
-    }
+        const formData = new FormData(this);
+        const searchParams = new URLSearchParams();
+        for (const pair of formData) {
+            searchParams.append(pair[0], pair[1]);
+        }
 
-    fetch('/api/auth/register', {
-        method: 'POST',
-        body: searchParams,
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        }
-    })
-    .then(response => response.text())
-    .then(data => {
-        if (data.includes("Usuario registrado con éxito")) {
-            document.getElementById('registroExitoso').style.display = 'block';
-            document.getElementById('registroError').style.display = 'none';
-        } else {
-            document.getElementById('registroError').style.display = 'block';
-            document.getElementById('registroExitoso').style.display = 'none';
-        }
-    })
-    .catch(error => {
-        document.getElementById('registroError').style.display = 'block';
-        document.getElementById('registroExitoso').style.display = 'none';
+        fetch('/api/auth/register', {
+            method: 'POST',
+            body: searchParams,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
+            .then(response => response.text())
+            .then(data => {
+                if (data.includes("Usuario registrado con éxito")) {
+                    document.getElementById('registroExitoso').style.display = 'block';
+                    document.getElementById('registroError').style.display = 'none';
+                } else {
+                    document.getElementById('registroError').style.display = 'block';
+                    document.getElementById('registroExitoso').style.display = 'none';
+                }
+            })
+            .catch(error => {
+                document.getElementById('registroError').style.display = 'block';
+                document.getElementById('registroExitoso').style.display = 'none';
+            });
     });
-});
 </script>
 
 
@@ -849,7 +829,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                                 Facilitador: Loyda Prado <br/>
                                 Jueves: 13:00 a 16:00 <br/>
                                 Lugar: I-201 <br/>
-                                  </p>
+                            </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -887,7 +867,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
 
                                 Lugar: Cancha polideportiva UVG
 
-                                </p>
+                            </p>
                             <button class="btn btn-primary" data-bs-dismiss="modal">
                                 <i class="fas fa-xmark fa-fw"></i>
                                 Cerar ventana
@@ -954,7 +934,7 @@ document.getElementById('registerForm').addEventListener('submit', function(even
                             <!-- datos del club de teatro -->
                             <p class="mb-4">
                                 Facilitador: Donald Monsanto <br/>
-                                 Sábado: 11:00 a 14:00 hrs. <br/>
+                                Sábado: 11:00 a 14:00 hrs. <br/>
 
                                 Lugar: I-201
 
@@ -1091,5 +1071,3 @@ document.getElementById('registerForm').addEventListener('submit', function(even
 <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
 </body>
 </html>
-
-
